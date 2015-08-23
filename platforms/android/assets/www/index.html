@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div class="app">
+           <h1>Send SMS Prototype</h1>
+            
+            <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" style="height:50px;" />
+            <textarea id="messageTxt" placeholder="Enter message"></textarea>
+            <input type="button" style="font-size:20px;font-weight:bold;" onclick="app.sendSms()" value="Send SMS" />
+            
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+                var app = {
+                    sendSms: function() {
+                        var number = document.getElementById('numberTxt').value.split(',');
+                        var message = document.getElementById('messageTxt').value;
+                        alert(number);
+                        alert(message);
+
+                        //CONFIGURATION
+                        var options = {
+                            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+                            android: {
+                                //intent: 'INTENT'  // send SMS with the native android SMS messaging
+                                intent: '' // send SMS without open any other app
+                            }
+                        };
+
+                        var success = function () { alert('Message sent successfully'); };
+                        var error = function (e) { alert('Message Failed:' + e); };
+                        for(var i=0,j=number.length;i<j;i++){
+                            sms.send(number[i], message, options, success, error);
+                        }
+                    }
+                };
+
+            </script>
+    </body>
+</html>
