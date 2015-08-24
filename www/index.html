@@ -15,36 +15,48 @@
             
             <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" style="height:50px;" />
             <textarea id="messageTxt" placeholder="Enter message"></textarea>
-            <input type="button" style="font-size:20px;font-weight:bold;" onclick="app.sendSms()" value="Send SMS" />
+            <input id="clk" type="button" style="font-size:20px;font-weight:bold;" onclick="" value="Send SMS" />
             
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-                var app = {
-                    sendSms: function() {
-                        var number = document.getElementById('numberTxt').value.split(',');
-                        var message = document.getElementById('messageTxt').value;
-                        alert(number);
-                        alert(message);
-
-                        //CONFIGURATION
-                        var options = {
-                            replaceLineBreaks: false, // true to replace \n by a new line, false by default
-                            android: {
-                                //intent: 'INTENT'  // send SMS with the native android SMS messaging
-                                intent: '' // send SMS without open any other app
+                
+                 document.addEventListener("deviceready", onDeviceReady, false);
+            
+            function onDeviceReady(){    
+                    var app1 = {
+                        sendSms: function() {
+                            var number = document.getElementById('numberTxt').value.split(',');
+                            var message = document.getElementById('messageTxt').value;
+                            alert(number);
+                            alert(message);
+    
+                            //CONFIGURATION
+                            var options = {
+                                replaceLineBreaks: false, // true to replace \n by a new line, false by default
+                                android: {
+                                    //intent: 'INTENT'  // send SMS with the native android SMS messaging
+                                    intent: '' // send SMS without open any other app
+                                }
+                            };
+    
+                            var success = function () { alert('Message sent successfully'); };
+                            var error = function (e) { alert('Message Failed:' + e); };
+                            for(var i=0,j=number.length;i<j;i++){
+                                sms.send(number[i], message, options, success, error);
                             }
-                        };
-
-                        var success = function () { alert('Message sent successfully'); };
-                        var error = function (e) { alert('Message Failed:' + e); };
-                        for(var i=0,j=number.length;i<j;i++){
-                            sms.send(number[i], message, options, success, error);
                         }
+                    };
+                    
+                    document.getElementById('clk').addEventListener("click", function(){
+                        
+                            alert('hahah');    
+                            app1.sendSms();
+                        });
+                        
                     }
-                };
-
+                }
             </script>
     </body>
 </html>
